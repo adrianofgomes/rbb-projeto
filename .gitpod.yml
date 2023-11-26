@@ -1,4 +1,4 @@
 image: gitpod/workspace-node-18
 
 tasks:
-  - init: yarn add truffle && yarn add ganache && yarn install
+  - init: yarn add truffle && yarn install
