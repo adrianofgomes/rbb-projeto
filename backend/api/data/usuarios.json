@@ -1,0 +1,14 @@
+{
+      "data": [
+        {
+          "id": "5da9ea674234635bdff45c02",
+          "name": "Usuario1",
+          "saldo": "200"
+        },
+        {
+            "id": "5da9ea674234635bdff45c02",
+            "name": "Usuario2",
+            "saldo": "300"
+          }
+      ]
+}
