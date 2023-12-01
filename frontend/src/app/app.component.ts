@@ -27,10 +27,16 @@ export class AppComponent {
     this.usuarios = await this.apiService.listarUsuario();
   }
 
-  getUsuarioSelecionado(){
+  getUsuarioSelecionado(): Usuario{
 
     let usuario: Usuario = this.formulario.get('comboUsuario')?.value;
     return usuario;
+  }
+
+  getProjetoSelecionado() : Projeto{
+
+    let projeto: Projeto = this.formulario.get('comboProjeto')?.value;
+    return projeto;
   }
 
   async transferirToken(){

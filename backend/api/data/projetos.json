@@ -1,10 +1,12 @@
  [
   {
     "id": "5da9ea674234635bdff45c02",
-    "nome": "Proj1"
+    "nome": "Proj1",
+    "aporte": 0
   },
   {
       "id": "5da9ea674234635bdff45c02",
-      "nome": "Proj2"
+      "nome": "Proj2",
+      "aporte": 0
   }
 ]

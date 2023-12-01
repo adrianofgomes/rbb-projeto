@@ -13,6 +13,12 @@
             </select>            
         </div>
         <div class="container m-4">
+          <label for="Transferência">Saldo disponível na conta do usuário:</label>
+          <input class="form-control" type="number" disabled="true" value="{{getUsuarioSelecionado().saldo}}"/>
+        </div>        
+
+
+        <div class="container m-4">
             <label for="Selecione um projeto">Selecione um projeto<span class="text-danger">*</span></label>
             <select class="form-control" formControlName="comboProjeto">
               <option value="">Selecione</option>
@@ -20,8 +26,8 @@
             </select>
         </div>
         <div class="container m-4">
-          <label for="Transferência">Saldo disponível na conta do usuário:</label>
-          <input class="form-control" type="number" disabled="true" value="{{getUsuarioSelecionado().saldo}}"/>
+          <label for="Transferência">Aporte ja realizado no projeto:</label>
+          <input class="form-control" type="number" disabled="true" value="{{getProjetoSelecionado().aporte}}"/>
         </div>        
 
         <div class="container m-4">
