@@ -14,7 +14,7 @@ contract ProjetoSocialNFT is ERC721, Ownable {
         //Owner inicial é quem implantou o contrato
     }
 
-    function mint(address to, uint256 valorMinimoViavel) public {
+    function mint(address to, uint256 valorMinimoViavel) public onlyOwner {
         _lastId += 1;
         _safeMint(to, _lastId);
 

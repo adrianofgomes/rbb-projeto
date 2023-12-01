@@ -5,10 +5,13 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract BRLToken is ERC20, Ownable {
-    uint256 private _totalSupply;
 
     constructor() ERC20("BRLToken", "BRLT") Ownable(msg.sender){
         //Owner inicial é quem implantou o contrato
+    }
+
+    function mint(address to, uint256 valor) public onlyOwner {
+        _mint(to, valor);
     }
 
 }
