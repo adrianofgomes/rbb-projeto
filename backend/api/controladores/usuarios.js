@@ -8,8 +8,7 @@ module.exports = app => {
       const { 
         id,
       } = req.params;
-      console.log(listaUsuario)
-      console.log(listaUsuario)
+
       const indice = listaUsuario.findIndex(usu => usu.id === id);
   
       if (indice === -1) {
