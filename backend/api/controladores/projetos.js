@@ -1,14 +1,14 @@
 module.exports = app => {
   const listaProjeto = app.data.projetos;
-  const controller = {};
+  const controlador = {};
 
-  controller.listar = (req, res) => res.status(200).json(listaProjeto);
+  controlador.listar = (req, res) => res.status(200).json(listaProjeto);
 
-  controller.recuperar = (req, res) => {
+  controlador.recuperar = (req, res) => {
     const { 
       id,
     } = req.params;
-    const indice = listaProjeto.data.findIndex(proj => proj.id === id);
+    const indice = listaProjeto.findIndex(proj => proj.id === id);
 
     if (indice === -1) {
       res.status(404).json({
@@ -20,30 +20,30 @@ module.exports = app => {
     res.status(200).json({
         message: 'Projeto encontrado com sucesso!',
         success: true,
-        data: listaProjeto.data[indice],
+        data: listaProjeto[indice],
     });
   }
 
-  controller.incluir = (req, res) => {
+  controlador.incluir = (req, res) => {
     res.status(404).json({
         message: 'Metodo nao implementado',
         success: false
       });
   };
 
-  controller.excluir = (req, res) => {
+  controlador.excluir = (req, res) => {
       res.status(404).json({
         message: 'Metodo nao implementado',
         success: false
       });
   };
 
-  controller.atualizar = (req, res) => {
+  controlador.atualizar = (req, res) => {
     res.status(404).json({
         message: 'Metodo nao implementado',
         success: false
       });
   }
 
-  return controller;
+  return controlador;
 }

@@ -1,16 +1,16 @@
 module.exports = app => {
     const listaUsuario = app.data.usuarios;
-    const controller = {};
+    const controlador = {};
   
-    controller.listar = (req, res) => res.status(200).json(listaUsuario);
+    controlador.listar = (req, res) => res.status(200).json(listaUsuario);
   
-    controller.recuperar = (req, res) => {
+    controlador.recuperar = (req, res) => {
       const { 
         id,
       } = req.params;
       console.log(listaUsuario)
-      console.log(listaUsuario.data)
-      const indice = listaUsuario.data.findIndex(usu => usu.id === id);
+      console.log(listaUsuario)
+      const indice = listaUsuario.findIndex(usu => usu.id === id);
   
       if (indice === -1) {
         res.status(404).json({
@@ -22,30 +22,45 @@ module.exports = app => {
       res.status(200).json({
           message: 'Usuario encontrado!',
           success: true,
-          data: listaUsuario.data[indice],
+          data: listaUsuario[indice],
       });
     }
+
+    controlador.transferir = (req, res) => {
+
+        const { id } = req.params;
+
+        const idProjeto = req.body.idProjeto;
+        const qntdTokens = req.body.qntdTokens;
+
+        res.status(200).json({
+          message: `Usuario ${id} transferiu ${qntdTokens} tokens para o projeto ${idProjeto}`,
+          success: true,
+          data: {},
+      });
+
+    }
   
-    controller.incluir = (req, res) => {
+    controlador.incluir = (req, res) => {
       res.status(404).json({
           message: 'Metodo nao implementado',
           success: false
         });
     };
   
-    controller.excluir = (req, res) => {
+    controlador.excluir = (req, res) => {
         res.status(404).json({
           message: 'Metodo nao implementado',
           success: false
         });
     };
   
-    controller.atualizar = (req, res) => {
+    controlador.atualizar = (req, res) => {
       res.status(404).json({
           message: 'Metodo nao implementado',
           success: false
         });
     }
   
-    return controller;
+    return controlador;
   }

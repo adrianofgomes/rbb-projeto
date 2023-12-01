@@ -1,14 +1,11 @@
-{
-      "data": [
-        {
-          "id": "5da9ea674234635bdff45c02",
-          "name": "Proj1",
-          "createdAt": "2019-10-18T16:37:58.979Z"
-        },
-        {
-            "id": "5da9ea674234635bdff45c02",
-            "name": "Proj2",
-            "createdAt": "2019-10-18T16:37:58.979Z"
-          }
-      ]
-}
+ [
+  {
+    "id": "5da9ea674234635bdff45c02",
+    "nome": "Proj1"
+  },
+  {
+      "id": "5da9ea674234635bdff45c02",
+      "nome": "Proj2"
+
+  }
+]

@@ -1,0 +1,41 @@
+<router-outlet></router-outlet>
+<h1 style="margin-left: 10px;">Blockchain Matchfunding BNDES</h1>
+
+<div class="container-fluid mt-4">
+  <div class="card">
+    <form [formGroup]="formulario">
+      <div class="card-body">
+        <div class="container m-4">
+            <label for="Selecione um usuário">Selecione um Usuário<span class="text-danger">*</span> </label>
+            <select class="form-control" formControlName="comboUsuario">
+              <option value="">Selecione</option>
+              <option [ngValue]="item" *ngFor="let item of usuarios">{{item.nome}}</option>
+            </select>            
+        </div>
+        <div class="container m-4">
+            <label for="Selecione um projeto">Selecione um projeto<span class="text-danger">*</span></label>
+            <select class="form-control" formControlName="comboProjeto">
+              <option value="">Selecione</option>
+              <option [ngValue]="item" *ngFor="let item of projetos">{{item.nome}}</option>
+            </select>
+        </div>
+        <div class="container m-4">
+          <label for="Transferência">Saldo disponível na conta do usuário:</label>
+          <input class="form-control" type="number" disabled="true" value="{{getUsuarioSelecionado().saldo}}"/>
+        </div>        
+
+        <div class="container m-4">
+          <label for="Transferência">Quantidade de tokens a serem transferidos<span class="text-danger">*</span></label>
+          <input type="number" class="form-control" formControlName="qntdTokensTransferir"/>
+        </div>        
+
+        <div class="container m-4">
+          <button class="btn btn-primary" (click)="transferirToken()" [disabled]="formulario.invalid">Transferir Token</button>
+          <br/>
+          {{mensagemTransferencia}}
+        </div>        
+
+      </div>
+    </form>
+  </div>
+</div>

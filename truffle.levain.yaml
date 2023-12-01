@@ -1,0 +1,7 @@
+version: 0.1.0
+
+levain.config.noBaseDir: true
+
+dependencies:
+    - node-runtime-18
+    
