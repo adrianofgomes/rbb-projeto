@@ -1,5 +1,7 @@
-var myContract = artifacts.require("BRLToken");
+var BRLToken = artifacts.require("BRLToken");
+var ProjetoSocialNFT = artifacts.require("ProjetoSocialNFT");
 
 module.exports = function(deployer){
-  deployer.deploy(myContract);
+  deployer.deploy(BRLToken);
+  deployer.deploy(ProjetoSocialNFT);
 }
