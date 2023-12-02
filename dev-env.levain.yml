@@ -1,0 +1,8 @@
+version: 0.1.0
+ 
+levain.config.noBaseDir: true
+ 
+dependencies:
+  - git
+  - node-runtime-18
+  - yarn-1
