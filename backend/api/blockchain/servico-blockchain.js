@@ -23,30 +23,28 @@ const projetoSocialAbi = [
     "function tokenURI(uint256 tokenId) public view returns (string memory)"
 ];
 
-const  projetoSocialAddress = '0x8295f3F8dd7BC0bdbd0a1d1e08574047eE96517d';
+const  projetoSocialAddress = '0x645c023d7d0795f8bef444b5d3a96c2e6e36355c';
 
 class ControladorBlockchain
 {
     
     
-    static recuperarValorMinimoViavel = async (idProjeto) =>{
+    static recuperarValorMinimoViavelProjeto = async (idProjeto) =>{
 
-        const provider = new ethers.providers.InfuraProvider("sepolia", PROJECT_ID);
-
-        let  signer = new ethers.Wallet.fromMnemonic(MNEMONIC);
-        signer = signer.connect(provider);
-        const contratoWithSigner = new ethers.Contract(projetoSocialAddress, projetoSocialAbi, signer);
-
-        let tx = await contratoWithSigner.getValorMinimoViavel(idProjeto);
-        
-        console.log(tx);
+        let conexao = ControladorBlockchain.pegaConexaoProjetoSocialConexao();
+        let tx = await conexao.getValorMinimoViavel(idProjeto);
 
         return tx.toNumber();
     }
 
-    static recuperarValorAporte = async (idProjeto) =>{
+    static recuperarValorAporteProjeto = async (idProjeto) =>{
         //TODO: PLUGAR NA BLOCKCHAIN
         return 500;
+    }
+
+    static recuperarDataFimAporteProjeto = async (idProjeto) =>{
+        //TODO: PLUGAR NA BLOCKCHAIN
+        return "10/10/2023";
     }
 
     static transferir = async (idUsuario, idProjeto, qntdTokens) =>{
@@ -58,7 +56,18 @@ class ControladorBlockchain
         return 1000;
     }
 
-    static pegaConexao = async() => {
+    static pegaConexaoProjetoSocial = () => {
+        
+        //const provider = new ethers.providers.InfuraProvider("sepolia", PROJECT_ID);
+        const provider = new ethers.providers.JsonRpcProvider();
+
+        let  signer = new ethers.Wallet.fromMnemonic(MNEMONIC);
+
+        signer = signer.connect(provider);
+
+        const contratoWithSigner = new ethers.Contract(projetoSocialAddress, projetoSocialAbi, signer);
+
+        return contratoWithSigner
 
     }
 }

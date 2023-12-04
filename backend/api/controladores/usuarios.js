@@ -5,18 +5,18 @@ module.exports = app => {
     const listaUsuario = app.data.usuarios;
     const controlador = {};
 
-    controlador.listar = (req, res) => 
+    controlador.listar = async (req, res) => 
     {
         const usuarios = [];
         for (usu of listaUsuario)
         {
-          const saldo = controladorBlockchain.recuperarSaldoUsuario(usu.id);
+          const saldo = await controladorBlockchain.recuperarSaldoUsuario(usu.id);
           usuarios.push(new Usuario(usu.id, usu.nome, saldo));
         }
         res.status(200).json(usuarios)
     }
   
-    controlador.recuperar = (req, res) => {
+    controlador.recuperar = async (req, res) => {
       const { id } = req.params;
 
       const indice = listaUsuario.findIndex(usu => usu.id === id);
@@ -27,7 +27,7 @@ module.exports = app => {
       } 
 
       const usuarioRecuperado = listaUsuario[indice];
-      const saldo = controladorBlockchain.recuperarSaldoUsuario(usuarioRecuperado.id);
+      const saldo = await controladorBlockchain.recuperarSaldoUsuario(usuarioRecuperado.id);
       const usuario = new Usuario(usuarioRecuperado.id, usuarioRecuperado.nome, saldo);
   
       res.status(200).json({message: 'Usuario encontrado com sucesso!',success: true,data: usuario,});

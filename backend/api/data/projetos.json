@@ -3,12 +3,7 @@
     "id": "1",
     "nome": "Proj1",
     "valorMinimoViavel": 0,
-    "valorAporte": 0
-  },
-  {
-      "id": "2",
-      "nome": "Proj2",
-      "valorMinimoViavel": 0,
-      "valorAporte": 0
-    }
+    "valorAporte": 0,
+    "dataFimAporte": ""
+  }
 ]

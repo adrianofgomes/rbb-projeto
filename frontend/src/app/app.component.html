@@ -11,6 +11,9 @@
               <label for="Transferência"><label for="Selecione um projeto">Selecione um projeto<span class="text-danger">*</span></label></label>
             </div>
             <div class="col-sm">
+              <label for="Transferência">Data fim de aporte:</label>
+            </div>
+            <div class="col-sm">
               <label for="Transferência">Valor mínimo viabilidade:</label>
             </div>
             <div class="col-sm">
@@ -24,6 +27,9 @@
                 <option value="">Selecione</option>
                 <option [ngValue]="item" *ngFor="let item of projetos">{{item.nome}}</option>
               </select>
+            </div>
+            <div class="col-sm">
+              <input class="form-control"  disabled="true" value="{{getProjetoSelecionado().dataFimAporte}}"/>
             </div>
             <div class="col-sm">
               <input class="form-control" type="number" disabled="true" value="{{getProjetoSelecionado().valorAporte}}"/>
