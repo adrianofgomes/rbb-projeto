@@ -25,10 +25,14 @@ async function main(){
         // An event triggered whenever anyone transfers to someone else
         "event Transfer(address indexed from, address indexed to, uint amount)",
 
-        "function mint(address to, uint256 valorMinimoViavel)"
+        "function mint(address to, uint256 valorMinimoViavel)",
+
+        "function getValorMinimoViavel(uint256 tokenId) public view returns (uint256)",
+
+        "function tokenURI(uint256 tokenId) public view virtual returns (string memory)"
     ];
 
-    const projetoSocialAddress = '0xeFf7E997e46C19Eb788fDFB21d48355fe449b71C';
+    const projetoSocialAddress = '0x8295f3F8dd7BC0bdbd0a1d1e08574047eE96517d';
 
     let  signer = new ethers.Wallet.fromMnemonic(MNEMONIC);
     signer = await signer.connect(provider);
@@ -44,7 +48,15 @@ async function main(){
         let tx = await contratoWithSigner.mint('0x0473C6Fe8d5C79D4a6c7D76FfFb59d439254f7FB', 100000);
         console.log(tx);
     }
-    mint();
+    //mint();
+
+    async function getProjeto1(){
+        let tx = await contratoWithSigner.getValorMinimoViavel(1);
+        console.log(tx.toNumber());
+        tx = await contratoWithSigner.tokenURI(1);
+        console.log(tx);
+    }
+    getProjeto1();
 
 };
 main();
