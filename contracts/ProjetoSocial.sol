@@ -14,14 +14,21 @@ contract ProjetoSocialNFT is ERC721, Ownable {
         //Owner inicial é quem implantou o contrato
     }
 
+    function _baseURI() internal pure override returns (string memory) {
+        return "https://github.com/adrianofgomes/rbb-projeto/tree/main/backend/stub/projetos/";
+    }
+
     function mint(address to, uint256 valorMinimoViavel) public onlyOwner {
         _lastId += 1;
         _safeMint(to, _lastId);
 
         _valorMinimoViavel[_lastId] = valorMinimoViavel;
+    }
 
-        emit Transfer(address(0), to, _lastId);
+    function getValorMinimoViavel(uint256 tokenId) public view returns (uint256) {
+        _requireOwned(tokenId);
 
+        return _valorMinimoViavel[_lastId];
     }
 
 }

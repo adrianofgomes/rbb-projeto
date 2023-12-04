@@ -28,7 +28,7 @@ async function main(){
         "function mint(address to, uint256 valorMinimoViavel)"
     ];
 
-    const projetoSocialAddress = '0xCA5B9B408ecB8ee62cBA8F9Dd99aD64aC888E689';
+    const projetoSocialAddress = '0xeFf7E997e46C19Eb788fDFB21d48355fe449b71C';
 
     let  signer = new ethers.Wallet.fromMnemonic(MNEMONIC);
     signer = await signer.connect(provider);
@@ -44,7 +44,7 @@ async function main(){
         let tx = await contratoWithSigner.mint('0x0473C6Fe8d5C79D4a6c7D76FfFb59d439254f7FB', 100000);
         console.log(tx);
     }
-    //mint();
+    mint();
 
 };
 main();
