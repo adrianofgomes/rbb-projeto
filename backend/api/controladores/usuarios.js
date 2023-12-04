@@ -1,28 +1,36 @@
+var Usuario = require("../modelos/usuario")
+var controladorBlockchain = require("../blockchain/servico-blockchain")
+
 module.exports = app => {
     const listaUsuario = app.data.usuarios;
     const controlador = {};
-  
-    controlador.listar = (req, res) => res.status(200).json(listaUsuario);
+
+    controlador.listar = (req, res) => 
+    {
+        const usuarios = [];
+        for (usu of listaUsuario)
+        {
+          const saldo = controladorBlockchain.recuperarSaldoUsuario(usu.id);
+          usuarios.push(new Usuario(usu.id, usu.nome, saldo));
+        }
+        res.status(200).json(usuarios)
+    }
   
     controlador.recuperar = (req, res) => {
-      const { 
-        id,
-      } = req.params;
+      const { id } = req.params;
 
       const indice = listaUsuario.findIndex(usu => usu.id === id);
   
       if (indice === -1) {
-        res.status(404).json({
-          message: 'Projeto nao encontrado.',
-          success: false
-        });
+        res.status(404).json({message: 'Projeto nao encontrado.',success: false});
         return;
       } 
-      res.status(200).json({
-          message: 'Usuario encontrado!',
-          success: true,
-          data: listaUsuario[indice],
-      });
+
+      const usuarioRecuperado = listaUsuario[indice];
+      const saldo = controladorBlockchain.recuperarSaldoUsuario(usuarioRecuperado.id);
+      const usuario = new Usuario(usuarioRecuperado.id, usuarioRecuperado.nome, saldo);
+  
+      res.status(200).json({message: 'Usuario encontrado com sucesso!',success: true,data: usuario,});
     }
 
     controlador.transferir = (req, res) => {
@@ -32,34 +40,17 @@ module.exports = app => {
         const idProjeto = req.body.idProjeto;
         const qntdTokens = req.body.qntdTokens;
 
-        res.status(200).json({
-          message: `Usuario ${id} transferiu ${qntdTokens} tokens para o projeto ${idProjeto}`,
-          success: true,
-          data: {},
-      });
+        controladorBlockchain.transferir(id, idProjeto, qntdTokens);
+
+        res.status(200).json({message: `Usuario ${id} transferiu ${qntdTokens} tokens para o projeto ${idProjeto}`,success: true,data: {},});
 
     }
   
-    controlador.incluir = (req, res) => {
-      res.status(404).json({
-          message: 'Metodo nao implementado',
-          success: false
-        });
-    };
+    controlador.incluir = (req, res) => {res.status(404).json({message: 'Metodo nao implementado',success: false});};
   
-    controlador.excluir = (req, res) => {
-        res.status(404).json({
-          message: 'Metodo nao implementado',
-          success: false
-        });
-    };
+    controlador.excluir = (req, res) => {res.status(404).json({message: 'Metodo nao implementado',success: false});};
   
-    controlador.atualizar = (req, res) => {
-      res.status(404).json({
-          message: 'Metodo nao implementado',
-          success: false
-        });
-    }
+    controlador.atualizar = (req, res) => {res.status(404).json({message: 'Metodo nao implementado',success: false});}
   
     return controlador;
   }
