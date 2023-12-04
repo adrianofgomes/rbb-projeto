@@ -6,39 +6,55 @@
     <form [formGroup]="formulario">
       <div class="card-body">
         <div class="container m-4">
-            <label for="Selecione um usuário">Selecione um Usuário<span class="text-danger">*</span> </label>
-            <select class="form-control" formControlName="comboUsuario">
-              <option value="">Selecione</option>
-              <option [ngValue]="item" *ngFor="let item of usuarios">{{item.nome}}</option>
-            </select>            
+          <div class="row">
+            <div class="col-sm">
+              <label for="Transferência"><label for="Selecione um projeto">Selecione um projeto<span class="text-danger">*</span></label></label>
+            </div>
+            <div class="col-sm">
+              <label for="Transferência">Valor mínimo viabilidade:</label>
+            </div>
+            <div class="col-sm">
+              <label for="Transferência">Aporte ja realizado no projeto:</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm">
+              <select class="form-control" formControlName="comboProjeto">
+                <option value="">Selecione</option>
+                <option [ngValue]="item" *ngFor="let item of projetos">{{item.nome}}</option>
+              </select>
+            </div>
+            <div class="col-sm">
+              <input class="form-control" type="number" disabled="true" value="{{getProjetoSelecionado().valorAporte}}"/>
+            </div>
+            <div class="col-sm">
+              <input class="form-control" type="number" disabled="true" value="{{getProjetoSelecionado().valorMinimoViavel}}"/>
+            </div>
+          </div>
+        </div>        
+
+        <div class="container m-4">
+          <div class="row">
+            <div class="col-sm"><label for="Selecione um usuário">Selecione um Usuário<span class="text-danger">*</span> </label></div>
+            <div class="col-sm"><label for="Transferência">Saldo disponível na conta do usuário:</label></div>
+            <div class="col-sm"><label for="Transferência">Quantidade de tokens a serem transferidos<span class="text-danger">*</span></label></div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+                <select class="form-control" formControlName="comboUsuario">
+                  <option value="">Selecione</option>
+                  <option [ngValue]="item" *ngFor="let item of usuarios">{{item.nome}}</option>
+                </select>            
+            </div>
+            <div class="col-sm"><input class="form-control" type="number" disabled="true" value="{{getUsuarioSelecionado().saldo}}"/></div>
+            <div class="col-sm"><input type="number" class="form-control" formControlName="qntdTokensTransferir"/></div>
+          </div>
         </div>
-        <div class="container m-4">
-          <label for="Transferência">Saldo disponível na conta do usuário:</label>
-          <input class="form-control" type="number" disabled="true" value="{{getUsuarioSelecionado().saldo}}"/>
-        </div>        
-
-
-        <div class="container m-4">
-            <label for="Selecione um projeto">Selecione um projeto<span class="text-danger">*</span></label>
-            <select class="form-control" formControlName="comboProjeto">
-              <option value="">Selecione</option>
-              <option [ngValue]="item" *ngFor="let item of projetos">{{item.nome}}</option>
-            </select>
-        </div>
-        <div class="container m-4">
-          <label for="Transferência">Aporte ja realizado no projeto:</label>
-          <input class="form-control" type="number" disabled="true" value="{{getProjetoSelecionado().aporte}}"/>
-        </div>        
-
-        <div class="container m-4">
-          <label for="Transferência">Quantidade de tokens a serem transferidos<span class="text-danger">*</span></label>
-          <input type="number" class="form-control" formControlName="qntdTokensTransferir"/>
-        </div>        
 
         <div class="container m-4">
           <button class="btn btn-primary" (click)="transferirToken()" [disabled]="formulario.invalid">Transferir Token</button>
-          <br/>
-          {{mensagemTransferencia}}
+          <br/>{{mensagemTransferencia}}
         </div>        
 
       </div>

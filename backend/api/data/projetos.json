@@ -1,12 +1,14 @@
  [
   {
-    "id": "5da9ea674234635bdff45c02",
+    "id": "1",
     "nome": "Proj1",
-    "aporte": 0
+    "valorMinimoViavel": 0,
+    "valorAporte": 0
   },
   {
-      "id": "5da9ea674234635bdff45c02",
+      "id": "2",
       "nome": "Proj2",
-      "aporte": 0
-  }
+      "valorMinimoViavel": 0,
+      "valorAporte": 0
+    }
 ]

@@ -2,15 +2,17 @@ export class Projeto {
     
     id:string;
     nome: string;
-    aporte: number;
+    valorMinimoViavel: number;
+    valorAporte: number;
 
     static criaVazio(){
-        return new Projeto("", "", 0);
+        return new Projeto("", "", 0, 0);
     }
-    constructor (id: string, nome: string, aporte:number){
+    constructor (id: string, nome: string, valorMinimoViavel:number, valorAporte: number){
         this.id = id;
         this.nome = nome;
-        this.aporte = aporte;
+        this.valorMinimoViavel = valorMinimoViavel;
+        this.valorAporte =valorAporte;
     }
 }
   
