@@ -1,6 +1,8 @@
 {
   "scripts": {
     "compile": "npx truffle compile",
+    "ganache": "npx ganache --seed %GANACHE_SEED% --chain.networkId=1337",
+    "ganached": "npx truffle migrate --network ganache --reset",
     "sepolia": "npx truffle migrate --network sepolia --reset",
     "batchInput": "node backend/batchInput.js"
   },

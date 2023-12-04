@@ -3,8 +3,8 @@ async function main(){
 
     const PROJECT_ID = process.env.PROJECT_ID;
     const MNEMONIC = process.env.MNEMONIC;
-    //const provider = new ethers.providers.JsonRpcProvider(`https://sepolia.infura.io/v3/${PROJECT_ID}`);
-    const provider = new ethers.providers.InfuraProvider("sepolia", PROJECT_ID);
+    const provider = new ethers.providers.JsonRpcProvider();
+    //const provider = new ethers.providers.InfuraProvider("sepolia", PROJECT_ID);
 
     
     //apenas para testar a conexão com a blockchain
@@ -29,10 +29,10 @@ async function main(){
 
         "function getValorMinimoViavel(uint256 tokenId) public view returns (uint256)",
 
-        "function tokenURI(uint256 tokenId) public view virtual returns (string memory)"
+        "function tokenURI(uint256 tokenId) public view returns (string memory)"
     ];
 
-    const projetoSocialAddress = '0x8295f3F8dd7BC0bdbd0a1d1e08574047eE96517d';
+    const projetoSocialAddress = '0x645c023d7d0795f8bef444b5d3a96c2e6e36355c';
 
     let  signer = new ethers.Wallet.fromMnemonic(MNEMONIC);
     signer = await signer.connect(provider);
