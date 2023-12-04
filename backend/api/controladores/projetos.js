@@ -9,10 +9,13 @@ module.exports = app => {
       const projetos = [];
       for (prj of listaProjeto)
       {
-         const valorMinimoViavel = controladorBlockchain.recuperarValorMinimoViavel(prj.id);
-         const valorAporte = controladorBlockchain.recuperarValorAporte(prj.id);
-         projetos.push(new Projeto(prj.id, prj.nome, valorMinimoViavel, valorAporte));
+          const valorMinimoViavel = controladorBlockchain.recuperarValorMinimoViavel(prj.id).then(p=>{
+          console.log(p);
+          const valorAporte = controladorBlockchain.recuperarValorAporte(prj.id);
+          projetos.push(new Projeto(prj.id, prj.nome, valorMinimoViavel, valorAporte));
+          });
       }
+      console.log('teste');
       res.status(200).json(projetos)
   }
 
