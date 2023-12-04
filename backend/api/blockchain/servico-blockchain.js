@@ -17,7 +17,10 @@ class ControladorBlockchain
     static recuperarSaldoUsuario = (idUsuario) =>
     {
         return 1000;
+    }
 
+    static pegaConexao(){
+        
     }
 }
 
