@@ -16,14 +16,20 @@ const projetoSocialAbi = [
     // An event triggered whenever anyone transfers to someone else
     "event Transfer(address indexed from, address indexed to, uint amount)",
 
-    "function mint(address to, uint256 valorMinimoViavel)",
+    "function mint(address to, uint256 valorMinimoViavel, uint dataFimAporte)",
 
     "function getValorMinimoViavel(uint256 tokenId) public view returns (uint256)",
+
+    "function getDataFimAporte(uint256 tokenId) public view returns (uint)",
+
+    "function transferir(uint256 projetoId, address doador, uint256 valorDoado)",
+
+    "function getValorTotalDoado(uint256 projetoId) public view returns (uint256)",
 
     "function tokenURI(uint256 tokenId) public view returns (string memory)"
 ];
 
-const  projetoSocialAddress = '0x645c023d7d0795f8bef444b5d3a96c2e6e36355c';
+const  projetoSocialAddress = '0xFd5729C83A0D31BDCcDE05011eB3eE8141C1aff7';
 
 class ControladorBlockchain
 {
@@ -37,18 +43,25 @@ class ControladorBlockchain
         return tx.toNumber();
     }
 
-    static recuperarValorAporteProjeto = async (idProjeto) =>{
-        //TODO: PLUGAR NA BLOCKCHAIN
-        return 500;
-    }
-
+    
     static recuperarDataFimAporteProjeto = async (idProjeto) =>{
-        //TODO: PLUGAR NA BLOCKCHAIN
-        return "10/10/2023";
+        let conexao = ControladorBlockchain.pegaConexaoProjetoSocial();
+        let tx = await conexao.getDataFimAporte(idProjeto);
+
+        return tx.toNumber();
     }
 
-    static transferir = async (idUsuario, idProjeto, qntdTokens) =>{
-        //TODO: PLUGAR NA BLOCKCHAIN
+    static recuperarValorAporteProjeto = async (idProjeto) =>{
+        let conexao = ControladorBlockchain.pegaConexaoProjetoSocial();
+        let tx = await conexao.getValorTotalDoado(idProjeto);
+
+        return tx.toNumber();
+    }
+
+
+    static transferir = async (idProjeto, enderecoDoador, qntdTokens) =>{
+        let conexao = ControladorBlockchain.pegaConexaoProjetoSocial();
+        await conexao.transferir(idProjeto, enderecoDoador, qntdTokens);
     }
 
     static recuperarSaldoUsuario = async (idUsuario) =>

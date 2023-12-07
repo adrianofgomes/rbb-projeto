@@ -45,6 +45,7 @@ export class AppComponent {
     let qntdTokensTransferir: number = this.formulario.get('qntdTokensTransferir')?.value
   
     const response = await this.apiService.transferirToken(usuarioSelecionado, projetoSelecionado, qntdTokensTransferir );
-    this.mensagemTransferencia = response.message;
+    this.mensagemTransferencia = `${response.message}. Atualize a tela.` ;
+    
   }
 }

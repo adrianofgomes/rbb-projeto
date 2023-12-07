@@ -8,7 +8,13 @@ contract ProjetoSocialNFT is ERC721, Ownable {
 
     uint internal _lastId;
 
-    mapping(uint256 tokenId => uint256) private _valorMinimoViavel;
+    mapping(uint256 projetoId => uint256 valorMinimoViavel) private _valorMinimoViavel;
+
+    mapping(uint256 projetoId => uint dataFimAporte) private _dataFimAporte;
+
+    mapping(uint256 projetoId => uint dataFimAporte) private _totalDoado;
+
+    mapping(uint256 projetoId => mapping(address doadorAddress => uint256 valorDoado)) private _valoresDoados;
 
     constructor() ERC721("ProjetoSocial", "SCLP") Ownable(msg.sender){
         //Owner inicial é quem implantou o contrato
@@ -18,17 +24,34 @@ contract ProjetoSocialNFT is ERC721, Ownable {
         return "https://raw.githubusercontent.com/adrianofgomes/rbb-projeto/main/backend/stub/projetos/";
     }
 
-    function mint(address to, uint256 valorMinimoViavel) public onlyOwner {
+    function mint(address to, uint256 valorMinimoViavel, uint dataFimAporte) public onlyOwner {
         _lastId += 1;
         _safeMint(to, _lastId);
 
         _valorMinimoViavel[_lastId] = valorMinimoViavel;
+        _dataFimAporte[_lastId] = dataFimAporte;
+
     }
 
-    function getValorMinimoViavel(uint256 tokenId) public view returns (uint256) {
-        _requireOwned(tokenId);
+    function getValorMinimoViavel(uint256 projetoId) public view returns (uint256) {
+        _requireOwned(projetoId);
 
-        return _valorMinimoViavel[_lastId];
+        return _valorMinimoViavel[projetoId];
+    }
+    function getDataFimAporte(uint256 projetoId) public view returns (uint) {
+        _requireOwned(projetoId);
+        return _dataFimAporte[projetoId];
+    }
+
+    function transferir(uint256 projetoId, address doador, uint256 valorDoado) public onlyOwner{
+        _requireOwned(projetoId);
+        _totalDoado[projetoId] = _totalDoado[projetoId] - _valoresDoados[projetoId][doador] + valorDoado;
+        _valoresDoados[projetoId][doador] = valorDoado;
+    }
+
+    function getValorTotalDoado(uint256 projetoId) public view returns (uint256) {
+        _requireOwned(projetoId);
+        return _totalDoado[projetoId];
     }
 
 }

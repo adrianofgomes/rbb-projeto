@@ -40,7 +40,7 @@ module.exports = app => {
         const idProjeto = req.body.idProjeto;
         const qntdTokens = req.body.qntdTokens;
 
-        controladorBlockchain.transferir(id, idProjeto, qntdTokens);
+        controladorBlockchain.transferir(idProjeto, id, qntdTokens);
 
         res.status(200).json({message: `Usuario ${id} transferiu ${qntdTokens} tokens para o projeto ${idProjeto}`,success: true,data: {},});
 

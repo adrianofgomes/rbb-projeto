@@ -12,7 +12,9 @@ module.exports = app => {
           const valorMinimoViavel = await controladorBlockchain.recuperarValorMinimoViavelProjeto(prj.id)
           const valorAporte = await controladorBlockchain.recuperarValorAporteProjeto(prj.id);
           const dataFimAporte = await controladorBlockchain.recuperarDataFimAporteProjeto(prj.id);
-          projetos.push(new Projeto(prj.id, prj.nome, valorMinimoViavel, valorAporte, dataFimAporte));
+          const jsonDateTime = new Date(dataFimAporte*1000);
+          const formatteedDateTime = jsonDateTime.toGMTString();
+          projetos.push(new Projeto(prj.id, prj.nome, valorMinimoViavel, valorAporte, formatteedDateTime));
       }
       res.status(200).json(projetos)
   }
