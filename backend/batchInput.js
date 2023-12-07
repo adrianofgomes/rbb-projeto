@@ -32,7 +32,8 @@ async function main(){
         "function tokenURI(uint256 tokenId) public view returns (string memory)"
     ];
 
-    const projetoSocialAddress = '0x645c023d7d0795f8bef444b5d3a96c2e6e36355c';
+    const projetoSocialAddress = '0x645C023D7D0795f8bEF444B5D3a96c2E6E36355C';
+    const donoPrimeiroProjeto = '0x0473C6Fe8d5C79D4a6c7D76FfFb59d439254f7FB';
 
     let  signer = new ethers.Wallet.fromMnemonic(MNEMONIC);
     signer = await signer.connect(provider);
@@ -45,7 +46,7 @@ async function main(){
 
     async function mint(){
         //cria um projeto social para o empreendedor 1 - 2a carteira do mneumonico utilizado
-        let tx = await contratoWithSigner.mint('0x0473C6Fe8d5C79D4a6c7D76FfFb59d439254f7FB', 100000);
+        let tx = await contratoWithSigner.mint(donoPrimeiroProjeto, 100000);
         console.log(tx);
     }
     //mint();

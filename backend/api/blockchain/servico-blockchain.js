@@ -31,7 +31,7 @@ class ControladorBlockchain
     
     static recuperarValorMinimoViavelProjeto = async (idProjeto) =>{
 
-        let conexao = ControladorBlockchain.pegaConexaoProjetoSocialConexao();
+        let conexao = ControladorBlockchain.pegaConexaoProjetoSocial();
         let tx = await conexao.getValorMinimoViavel(idProjeto);
 
         return tx.toNumber();
