@@ -34,11 +34,15 @@ async function main(){
         "function transferir(uint256 projetoId, address doador, uint256 valorDoado)",
 
         "function getValorTotalDoado(uint256 projetoId) public view returns (uint256)",
+        
+        "function depositar(address cliente, uint256 deposito) public onlyOwner returns (uint256)",
+
+        "function getSaldoCliente(address cliente) public view returns (uint256)",
 
         "function tokenURI(uint256 tokenId) public view returns (string memory)"
     ];
 
-    const projetoSocialAddress = '0xFd5729C83A0D31BDCcDE05011eB3eE8141C1aff7';
+    const projetoSocialAddress = '0x645C023D7D0795f8bEF444B5D3a96c2E6E36355C';
     const donoPrimeiroProjeto = '0x0473C6Fe8d5C79D4a6c7D76FfFb59d439254f7FB';
     const doador = "0xA4c8F5F8088c95bf2786CA44D846497620109655";
 
@@ -51,24 +55,6 @@ async function main(){
     nome = await contratoWithSigner.name();
     console.log('nome do contrato: ' + nome);
 
-    async function mint(){
-
-        //cria um projeto social para o empreendedor 1 - 2a carteira do mneumonico utilizado
-        var data = new Date();
-        data.setMonth(data.getMonth() + 1);
-        const dataEmSegundos = Math.floor(data.getTime() / 1000);
-        let tx = await contratoWithSigner.mint(donoPrimeiroProjeto, 100000, dataEmSegundos);
-        console.log(tx);
-
-    }
-    //mint();
-
-    async function transferir(){
-
-        tx = await contratoWithSigner.transferir(1, doador, 50);
-        console.log(tx);
-    }
-    //transferir();
     async function getProjeto1(){
         let tx = await contratoWithSigner.getValorMinimoViavel(1);
         console.log(tx.toNumber());
@@ -82,7 +68,39 @@ async function main(){
         tx = await contratoWithSigner.tokenURI(1);
         console.log(tx);
     }
-    getProjeto1();
+
+    async function mint(){
+
+        //cria um projeto social para o empreendedor 1 - 2a carteira do mneumonico utilizado
+        var data = new Date();
+        data.setMonth(data.getMonth() + 1);
+        const dataEmSegundos = Math.floor(data.getTime() / 1000);
+
+        //mint
+        let tx = await contratoWithSigner.mint(donoPrimeiroProjeto, 100000, dataEmSegundos);
+        console.log("mint", tx);
+        
+        //informacoes de projeto
+        getProjeto1();
+
+        console.log("=======================================================");
+        console.log("=======================================================");
+
+        //depositar
+        tx = await contratoWithSigner.depositar(doador, 5000);
+        console.log("depositar", tx);
+
+        //transferir
+        tx = await contratoWithSigner.transferir(1, doador, 50);
+        console.log("transferir", tx);
+
+        //saldo
+        tx = await contratoWithSigner.getSaldoCliente(doador);
+        console.log("saldo", tx.toNumber());
+
+    }
+    mint();
+
 
 };
 main();

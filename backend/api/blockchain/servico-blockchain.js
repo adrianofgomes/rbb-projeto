@@ -26,10 +26,14 @@ const projetoSocialAbi = [
 
     "function getValorTotalDoado(uint256 projetoId) public view returns (uint256)",
 
+    "function depositar(address cliente, uint256 deposito) public returns (uint256)",
+
+    "function getSaldoCliente(address cliente) public view returns (uint256)",
+
     "function tokenURI(uint256 tokenId) public view returns (string memory)"
 ];
 
-const  projetoSocialAddress = '0xFd5729C83A0D31BDCcDE05011eB3eE8141C1aff7';
+const  projetoSocialAddress = '0x645C023D7D0795f8bEF444B5D3a96c2E6E36355C';
 
 class ControladorBlockchain
 {
@@ -64,10 +68,21 @@ class ControladorBlockchain
         await conexao.transferir(idProjeto, enderecoDoador, qntdTokens);
     }
 
-    static recuperarSaldoUsuario = async (idUsuario) =>
+    static depositar = async (idUsuario, valor) =>
     {
-        return 1000;
+        let conexao = ControladorBlockchain.pegaConexaoProjetoSocial();
+        await conexao.depositar(idUsuario, valor);
     }
+
+
+    static recuperarSaldoDoador = async (idUsuario) =>
+    {
+        let conexao = ControladorBlockchain.pegaConexaoProjetoSocial();
+        let tx =  await conexao.getSaldoCliente(idUsuario);
+        return tx.toNumber();
+    }
+
+
 
     static pegaConexaoProjetoSocial = () => {
         

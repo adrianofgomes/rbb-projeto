@@ -1,69 +1,153 @@
 <router-outlet></router-outlet>
 <h1 style="margin-left: 10px;">Blockchain Matchfunding</h1>
 
+
+
 <div class="container-fluid mt-4">
-  <div class="card">
-    <form [formGroup]="formulario">
-      <div class="card-body">
-        <div class="container m-4">
-          <div class="row">
-            <div class="col-sm">
-              <label for="Transferência"><label for="Selecione um projeto">Selecione um projeto<span class="text-danger">*</span></label></label>
+  <div class="row">
+    <div class="col-sm">
+      <h3>Doadores</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Doador</th>
+            <th scope="col">Endereço</th>
+            <th scope="col">Saldo em conta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doador of doadores">
+            <td>{{doador.nome}}</td>
+            <td>{{doador.id}}</td>
+            <td>{{doador.saldo}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <hr/>
+      <h3>Projetos</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Projeto</th>
+            <th scope="col">ID</th>
+            <th scope="col">Data fim de aporte</th>
+            <th scope="col">Minimo aporte viabilidade</th>
+            <th scope="col">Total Doado</th>
+            <th scope="col">Valor que falta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let projeto of projetos">
+            <td>{{projeto.nome}}</td>
+            <td>{{projeto.id}}</td>
+            <td>{{projeto.dataFimAporte}}</td>
+            <td>{{projeto.valorMinimoViavel}}</td>
+            <td>{{projeto.valorAporte}}</td>
+            <td>{{(projeto.valorMinimoViavel - projeto.valorAporte)}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm">
+      <div class="card">
+        <form [formGroup]="formularioDeposito">
+          <h3 style="margin-left:50px; margin-top:10px">Controle de conta corrente dos doadores</h3>
+          <div class="card-body">
+            <div class="container m-4">
+              <div class="row">
+                <div class="col-sm"><label for="Selecione um usuário">Doador<span class="text-danger">*</span> </label></div>
+                <div class="col-sm"><label for="Transferência">Saldo atual da conta:</label></div>
+                <div class="col-sm"><label for="Transferência">Valor a ser depositado na conta<span class="text-danger">*</span></label></div>
+              </div>
+              <div class="row">
+                <div class="col-sm">
+                    <select class="form-control" formControlName="comboDoadorDeposito">
+                      <option value="">Selecione</option>
+                      <option [ngValue]="item" *ngFor="let item of doadores">{{item.nome}}</option>
+                    </select>            
+                </div>
+                <div class="col-sm"><input class="form-control" type="number" disabled="true" value="{{getDoadorSelecionadoDeposito().saldo}}"/></div>
+                <div class="col-sm"><input type="number" class="form-control" formControlName="valorDeposito"/></div>
+              </div>
             </div>
-            <div class="col-sm">
-              <label for="Transferência">Data fim de aporte:</label>
-            </div>
-            <div class="col-sm">
-              <label for="Transferência">Valor mínimo viabilidade:</label>
-            </div>
-            <div class="col-sm">
-              <label for="Transferência">Aporte ja realizado no projeto:</label>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-sm">
-              <select class="form-control" formControlName="comboProjeto">
-                <option value="">Selecione</option>
-                <option [ngValue]="item" *ngFor="let item of projetos">{{item.nome}}</option>
-              </select>
-            </div>
-            <div class="col-sm">
-              <input class="form-control"  disabled="true" value="{{getProjetoSelecionado().dataFimAporte}}"/>
-            </div>
-            <div class="col-sm">
-              <input class="form-control" type="number" disabled="true" value="{{getProjetoSelecionado().valorAporte}}"/>
-            </div>
-            <div class="col-sm">
-              <input class="form-control" type="number" disabled="true" value="{{getProjetoSelecionado().valorMinimoViavel}}"/>
-            </div>
-          </div>
-        </div>        
+            <div class="container m-4">
+              <button class="btn btn-primary" (click)="depositar()" [disabled]="formularioDeposito.invalid">Depositar</button>
+              <br/>{{mensagemDeposito}}
+            </div>        
 
-        <div class="container m-4">
-          <div class="row">
-            <div class="col-sm"><label for="Selecione um usuário">Selecione um Usuário<span class="text-danger">*</span> </label></div>
-            <div class="col-sm"><label for="Transferência">Saldo disponível na conta do usuário:</label></div>
-            <div class="col-sm"><label for="Transferência">Quantidade de tokens a serem transferidos<span class="text-danger">*</span></label></div>
           </div>
-          <div class="row">
-            <div class="col-sm">
-                <select class="form-control" formControlName="comboUsuario">
-                  <option value="">Selecione</option>
-                  <option [ngValue]="item" *ngFor="let item of usuarios">{{item.nome}}</option>
-                </select>            
-            </div>
-            <div class="col-sm"><input class="form-control" type="number" disabled="true" value="{{getUsuarioSelecionado().saldo}}"/></div>
-            <div class="col-sm"><input type="number" class="form-control" formControlName="qntdTokensTransferir"/></div>
-          </div>
-        </div>
-
-        <div class="container m-4">
-          <button class="btn btn-primary" (click)="transferirToken()" [disabled]="formulario.invalid">Transferir Token</button>
-          <br/>{{mensagemTransferencia}}
-        </div>        
-
+        </form>
       </div>
-    </form>
+
+    <hr/>
+
+    <div class="container-fluid mt-4">
+      <div class="card">
+        <form [formGroup]="formulario">
+          <h3 style="margin-left:50px; margin-top:10px">Controle de doações para os projetos</h3>
+          <div class="card-body">
+            <div class="container m-4">
+              <div class="row">
+                <div class="col-sm">
+                  <label for="Transferência"><label for="Selecione um projeto">Selecione um projeto<span class="text-danger">*</span></label></label>
+                </div>
+                <div class="col-sm">
+                  <label for="Transferência">Data fim de aporte:</label>
+                </div>
+                <div class="col-sm">
+                  <label for="Transferência">Valor mínimo viabilidade:</label>
+                </div>
+                <div class="col-sm">
+                  <label for="Transferência">Total doado:</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm">
+                  <select class="form-control" formControlName="comboProjeto">
+                    <option value="">Selecione</option>
+                    <option [ngValue]="item" *ngFor="let item of projetos">{{item.nome}}</option>
+                  </select>
+                </div>
+                <div class="col-sm">
+                  <input class="form-control"  disabled="true" value="{{getProjetoSelecionado().dataFimAporte}}"/>
+                </div>
+                <div class="col-sm">
+                  <input class="form-control" type="number" disabled="true" value="{{getProjetoSelecionado().valorAporte}}"/>
+                </div>
+                <div class="col-sm">
+                  <input class="form-control" type="number" disabled="true" value="{{getProjetoSelecionado().valorMinimoViavel}}"/>
+                </div>
+              </div>
+            </div>        
+
+            <div class="container m-4">
+              <div class="row">
+                <div class="col-sm"><label for="Selecione um usuário">Doador<span class="text-danger">*</span> </label></div>
+                <div class="col-sm"><label for="Transferência">Saldo atual da conta corrente:</label></div>
+                <div class="col-sm"><label for="Transferência">Valor a ser doado<span class="text-danger">*</span></label></div>
+              </div>
+              <div class="row">
+                <div class="col-sm">
+                    <select class="form-control" formControlName="comboDoador">
+                      <option value="">Selecione</option>
+                      <option [ngValue]="item" *ngFor="let item of doadores">{{item.nome}}</option>
+                    </select>            
+                </div>
+                <div class="col-sm"><input class="form-control" type="number" disabled="true" value="{{getDoadorSelecionado().saldo}}"/></div>
+                <div class="col-sm"><input type="number" class="form-control" formControlName="qntdTokensTransferir"/></div>
+              </div>
+            </div>
+
+            <div class="container m-4">
+              <button class="btn btn-primary" (click)="transferirToken()" [disabled]="formulario.invalid">Transferir Token</button>
+              <br/>{{mensagemTransferencia}}
+            </div>        
+
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>

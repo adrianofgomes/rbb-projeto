@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from './api/api.service';
 import { Projeto } from './modelos/projeto';
-import { Usuario } from './modelos/usuario';
+import { Doador } from './modelos/doador';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -13,39 +13,60 @@ export class AppComponent {
   title = 'Bndes Blockchain Match Funding';
 
   projetos: Projeto[] = [];
-  usuarios: Usuario[] = [];
+  doadores: Doador[] = [];
+
   mensagemTransferencia: string = "";
 
   formulario: FormGroup;
 
+  formularioDeposito: FormGroup;
+  mensagemDeposito: string = "";
+
   constructor(private apiService: ApiService,  private formBuilder: FormBuilder) { 
-    this.formulario = this.formBuilder.group({comboProjeto : ['', [Validators.required]], comboUsuario : ['', [Validators.required]], qntdTokensTransferir:['', [Validators.required]]});;
+    this.formulario = this.formBuilder.group({comboProjeto : ['', [Validators.required]], comboDoador : ['', [Validators.required]], qntdTokensTransferir:['', [Validators.required]]});;
+    this.formularioDeposito = this.formBuilder.group({comboDoadorDeposito : ['', [Validators.required]], valorDeposito:['', [Validators.required]]});;
   }
 
   async ngOnInit(): Promise<void> {
     this.projetos = await this.apiService.listarProjeto();
-    this.usuarios = await this.apiService.listarUsuario();
+    this.doadores = await this.apiService.listarDoador();
   }
 
-  getUsuarioSelecionado(): Usuario{
 
-    let usuario: Usuario = this.formulario.get('comboUsuario')?.value;
-    return usuario;
+  getDoadorSelecionado(): Doador{
+
+    let doador: Doador = this.formulario.get('comboDoador')?.value;
+    return doador;
+  }
+
+  getDoadorSelecionadoDeposito(): Doador{
+    let doador: Doador = this.formularioDeposito.get('comboDoadorDeposito')?.value;
+    
+    return doador;
   }
 
   getProjetoSelecionado() : Projeto{
-
     let projeto: Projeto = this.formulario.get('comboProjeto')?.value;
     return projeto;
   }
 
   async transferirToken(){
-    let usuarioSelecionado: Usuario = this.formulario.get('comboUsuario')?.value
+    let doadorSelecionado: Doador = this.formulario.get('comboDoador')?.value
     let projetoSelecionado: Projeto = this.formulario.get('comboProjeto')?.value
     let qntdTokensTransferir: number = this.formulario.get('qntdTokensTransferir')?.value
   
-    const response = await this.apiService.transferirToken(usuarioSelecionado, projetoSelecionado, qntdTokensTransferir );
+    const response = await this.apiService.transferirToken(doadorSelecionado, projetoSelecionado, qntdTokensTransferir );
     this.mensagemTransferencia = `${response.message}. Atualize a tela.` ;
+    location.reload();
     
+  }
+
+  async depositar(){
+    let doadorSelecionado: Doador = this.formularioDeposito.get('comboDoadorDeposito')?.value
+    let valorDeposito: number = this.formularioDeposito.get('valorDeposito')?.value
+  
+    const response = await this.apiService.depositar(doadorSelecionado, valorDeposito );
+    this.mensagemDeposito = `${response.message}. Atualize a tela.` ;
+    location.reload();
   }
 }

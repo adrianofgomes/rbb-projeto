@@ -1,4 +1,4 @@
-const Usuario = class{
+const Doador = class{
     
     id;
     nome;
@@ -15,4 +15,4 @@ const Usuario = class{
      }
 }
   
-module.exports = Usuario;
+module.exports = Doador;

@@ -1,11 +1,11 @@
-export class Usuario {
+export class Doador {
     
     id:string;
     nome: string;
     saldo: number;
 
     static criaVazio(){
-        return new Usuario("", "", 0);
+        return new Doador("", "", 0);
     }
 
     constructor (id: string, nome: string, saldo: number){
