@@ -4,6 +4,7 @@
     "nome": "Proj1",
     "valorMinimoViavel": 0,
     "valorAporte": 0,
-    "dataFimAporte": ""
+    "dataFimAporte": "",
+    "metadadoNft": "https://testnets.opensea.io/collection/projetosocial-4"
   }
 ]
